@@ -1,3 +1,4 @@
+-- Anton Grahn
 
 getSubListsOuterLoop :: ([Int],Int,Int) -> [([Int],Int,Int,Int)]
 getSubListsOuterLoop (a,i,j) 
