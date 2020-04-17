@@ -106,10 +106,18 @@ simplify (Op oper left right) =
       ("/",e,Const 1) -> e
       ("-",le,re)     -> if left==right then Const 0 else Op "-" le re
       (op,le,re)      -> Op op le re
-simplify (App id e1) = App id e1
+simplify (App id e1) = App id x
+  where x = simplify e1
 
 
 mkfun ::  (EXPR, EXPR) -> (Float -> Float)
 mkfun (body, var) = \x -> eval (body) [(unparse var,x)]
 
+findzero ::  String -> String -> Float -> Float
+findzero (var) (body) (value)= findzerogetfunctions(parse var, parse body, diff (parse var) (parse body),value)
 
+findzerogetfunctions :: (EXPR, EXPR,EXPR, Float) -> Float
+findzerogetfunctions (var,body, derivative,value) 
+  |((value - x) < 0.0001) && ((value- x) > -0.0001)  =  x 
+  | otherwise = findzerogetfunctions(var, body, derivative,x) 
+  where x =  eval (Op "-" var (Op "/" (body) derivative)) [(unparse var,value)]
