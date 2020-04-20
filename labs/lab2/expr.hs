@@ -1,4 +1,5 @@
 -- Code to Haskell lab assignment 2 in the course D7012E by Håkan Jonsson
+--  Anton Grahn
 
 import Data.Char
 
