@@ -6,11 +6,18 @@ import qualified Expr
 type T = Statement
 data Statement =
     Assignment String Expr.T |
-    If Expr.T Statement Statement
+    If Expr.T Statement Statement |
+    while Expr.T Statement |
+    skip |
+    read String |
+    begin Statement end |
+    write expr |
     deriving Show
 
 assignment = word #- accept ":=" # Expr.parse #- require ";" >-> buildAss
 buildAss (v, e) = Assignment v e
+While 
+
 
 exec :: [T] -> Dictionary.T String Integer -> [Integer] -> [Integer]
 exec (If cond thenStmts elseStmts: stmts) dict input = 
