@@ -38,3 +38,38 @@ sp = putStr (toString p)
 rp = Program.exec p [3,16]
 
 rp1 = Program.exec p1 [1024, 2]
+
+pr :: Program.T
+pr = fromString ("\
+\read k;\
+\write k;\
+\repeat\
+\ begin\
+\ k := k + 1;\
+\ write k;\
+\ end\
+\until k;")
+
+spr = putStr (toString pr)
+rpr k = Program.exec pr [k]
+
+-- *TestProgram> spr
+-- read k;
+-- write k;
+-- repeat
+-- begin
+-- k := k+1;
+-- write k;
+-- end
+-- until k;
+-- *TestProgram> rpr (-2)
+-- [-2,-1,0,1]
+-- *TestProgram> rpr (-1)
+-- [-1,0,1]
+-- *TestProgram> rpr 0
+-- [0,1]
+-- *TestProgram> rpr 1
+-- [1,2]
+-- *TestProgram> rpr 2
+-- [2,3]
+-- *TestProgram> 
